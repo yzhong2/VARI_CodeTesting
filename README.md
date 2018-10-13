@@ -15,8 +15,8 @@ Cran or bioconductor repositories.
 # Running the tests
 Open "vcfMain.R" file and modify the variable 'fName' into the location of the file coding_challenge_final.vcf in your system.
 change the variable 'oFile' into the file name that you want to name for the output of the program in your system.
-change the variable 'odir' into the directory name where you want to put the output file in your system.
-Open one R section to run the commands in vcfMain.R using interactive mode after the modification
+Change the variable 'odir' into the directory name where you want to put the output file in your system.
+Open one R section to run the commands in vcfMain.R using interactive mode after above modification
 
 # Authors
 Yi Zhong. Ph.D
