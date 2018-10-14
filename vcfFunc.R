@@ -23,7 +23,8 @@ VcfDataProcess <- function(vcfDat,splName) {
              resultMat <- cbind(chrMat,posMat,refMat,alleleMat,cigarMat,
                                 AFMat,RDpMat)
              ## this step is for cigar value splitting for multiple muations
-             ## happen in one cigar
+             ## happen in one cigar. For example cigar value : 2X5D2X, we need to split this row into 5 rows
+             ## with each row for one mutation.
              cigarMat <- apply(resultMat,1,CigarValuePro)
              cigarMat <- cigarMat[[1]][[1]]
              colnames(cigarMat) <- colnames(resultMat)
