@@ -105,8 +105,7 @@ PostionCigar <- function(oneLine,refSeq, qurySeq,cigarOpe,cigarLen) {
             quryeVec <- c(quryeVec,quryePos)
             refGeno <- c(refGeno,substr(refSeq, refbPos, refePos))
             quryGeno <- c(quryGeno,substr(qurySeq,qurybPos,quryePos))
-            ## this step I will get the genotype for ref and query seq
-         }
+          }
       }
       else if(opType == 'M') {
          refbPos <- refbPos + opNum 
@@ -115,7 +114,7 @@ PostionCigar <- function(oneLine,refSeq, qurySeq,cigarOpe,cigarLen) {
          quryePos <- qurybPos 
       }
       ## this is for deletion , so reference should have ref geno, query 
-      ## geno should be --
+      ## geno should be short, like "chr2	61414639	GCAAT	G 1M4D deletion"
       else if(opType == 'D'){ 
          refePos <- refePos + opNum    
          refGeno <- c(refGeno,substr(refSeq, refbPos, refePos)) 
@@ -125,15 +124,13 @@ PostionCigar <- function(oneLine,refSeq, qurySeq,cigarOpe,cigarLen) {
          if(substr(quryGeno[qlen],1,1) != substr(refGeno[relen],1,1)) {
             stop('deletion genotype is wrong')
          }
-         #quryGeno <- c(quryGeno,paste(rep('-',times=opNum),collapse='')) 
-         ##update the ref coordinate 
          refbVect <- c(refbVect,refbPos)
          refeVect <- c(refeVect,refePos)
          refbPos <- refePos + 1
          refePos <- refbPos
       }
       ## this step is for the insertion case, so reference genotype should 
-      ## be -- but qury should be the genotype
+      ## be shorter but qury should contain insertion sequence like : chr2	209223123	G	GTTT	1M3I insertion
       else if(opType == 'I'){
          quryePos <- quryePos + opNum 
          quryGeno <- c(quryGeno,substr(qurySeq, qurybPos,quryePos))
@@ -154,13 +151,11 @@ PostionCigar <- function(oneLine,refSeq, qurySeq,cigarOpe,cigarLen) {
       }
    }
    startpos <- as.integer(oneLineMat[,'POS'])
-   #endpos <- as.integer(oneLineMat[,'End_Pos'])
    if(length(refbVect) > 1) {
       rowIndex <- rep(1, times=length(refbVect))
       oneLineMat <- oneLineMat[rowIndex,]
    }
    oneLineMat[,'POS'] <- as.character(refbVect + startpos - 1)
-   #oneLineMat[,'End_Pos'] <- as.character(refeVect +endpos-1)
    oneLineMat[,'REF'] <- refGeno
    oneLineMat[,'ALT'] <- quryGeno
    return (list(oneLineMat))
@@ -265,7 +260,7 @@ ExAcRest <- function(dat, url='http://exac.hms.harvard.edu/rest/variant/variant/
    return (fName)
 }
 
-### this function is for selecting the mutation function impact
+### this function is for selecting the multiple mutation function impacts
 ### selection will be based on polyphen score
 selectionDeleter <- function(dat) {
    if(nrow(dat) == 1) {
