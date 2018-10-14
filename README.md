@@ -1,7 +1,7 @@
 # VARI_CodeTesting  
 VARI  code testing for job application.	
 Input data file : coding_challenge_final.vcf	  
-Project description file : VARI_BRS_position_coding_challenge_instructions_v2.pdf	 
+Project description file : VARI_BRS_position_coding_challenge_instructions_v2.pdf    
 Output file : coding_challenge_final_Annot    
 R main function file : vcfMain.R    
 R file contains all functions : vcfFunc.R   
